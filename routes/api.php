@@ -10,6 +10,7 @@ use App\Http\Controllers\PlayerCrudController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PotController;
 use App\Http\Controllers\StageController;
+use App\Http\Controllers\TableController;
 use App\Http\Controllers\TeamOfTheWeekController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
@@ -73,6 +74,10 @@ Route::controller(PlayerController::class)->group(function () {
     Route::get('/players/rating', 'sortBy');
     Route::get('/players/position/good', 'getForTeamOfTheWeek');
     Route::patch('/players/swap', 'swap');
+});
+
+Route::controller(TableController::class)->group(function () {
+    Route::get('/table/{stageId}', 'getTable');
 });
 
 Route::controller(PlayerCrudController::class)->group(function () {
