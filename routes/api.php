@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ClubController;
 use App\Http\Controllers\ClubCrudController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\GameCrudController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerCrudController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PotController;
