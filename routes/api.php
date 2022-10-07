@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ClubCrudController;
+use App\Http\Controllers\GameCrudController;
+use App\Http\Controllers\PlayerCrudController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::controller(PlayerCrudController::class)->group(function () {
+    Route::get('/players/{id}', 'read');
+    Route::post('/players/create', 'create');
+    Route::patch('/players/{id}', 'update');
+    Route::delete('/players/{id}', 'delete');
+});
+
+Route::controller(ClubCrudController::class)->group(function () {
+    Route::get('/clubs/{id}', 'read');
+    Route::post('/clubs/create', 'create');
+    Route::patch('/clubs/{id}', 'update');
+    Route::delete('/clubs/{id}', 'delete');
+});
+
+Route::controller(GameCrudController::class)->group(function () {
+    Route::get('/games/{id}', 'read');
+    Route::post('/games/create', 'create');
+    Route::patch('/games/{id}', 'update');
 });
