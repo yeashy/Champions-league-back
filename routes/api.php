@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ClubController;
 use App\Http\Controllers\ClubCrudController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\GameCrudController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerCrudController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PotController;
@@ -49,6 +51,20 @@ Route::controller(TeamOfTheWeekController::class)->group(function () {
 Route::controller(VideoController::class)->group(function () {
     Route::get('/videos', 'getVideos');
     Route::get('/videos/best', 'getBestVideo');
+});
+
+Route::controller(ClubController::class)->group(function () {
+    Route::get('/clubs/{id}/players', 'getPlayers');
+    Route::get('/clubs', 'getClubList');
+    Route::patch('/clubs/swap/groups', 'swapGroups');
+    Route::patch('/clubs/swap/pots', 'swapPots');
+});
+
+Route::controller(PlayerController::class)->group(function () {
+    Route::get('/players/{id}/stats', 'showPlayerStats');
+    Route::get('/players/rating', 'sortBy');
+    Route::get('/players/position/good', 'getForTeamOfTheWeek');
+    Route::patch('/players/swap', 'swap');
 });
 
 Route::controller(PlayerCrudController::class)->group(function () {
