@@ -1,8 +1,14 @@
 <?php
 
 use App\Http\Controllers\ClubCrudController;
+use App\Http\Controllers\FormationController;
 use App\Http\Controllers\GameCrudController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PlayerCrudController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\PotController;
+use App\Http\Controllers\TeamOfTheWeekController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +22,34 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::controller(FormationController::class)->group(function () {
+    Route::get('/formations', 'getFormations');
+    Route::get('/formations/{id}', 'getPositions');
+});
+
+Route::controller(GroupController::class)->group(function () {
+    Route::get('/groups', 'getClubs');
+    Route::patch('/groups/make', 'addClubsToGroups');
+});
+
+Route::controller(PositionController::class)->group(function () {
+    Route::get('positions/{id}/players', 'getPlayers');
+});
+
+Route::controller(PotController::class)->group(function () {
+    Route::get('/pots', 'getClubs');
+});
+
+Route::controller(TeamOfTheWeekController::class)->group(function () {
+    Route::get('/totw/{id}', 'read');
+    Route::post('/totw', 'create');
+});
+
+Route::controller(VideoController::class)->group(function () {
+    Route::get('/videos', 'getVideos');
+    Route::get('/videos/best', 'getBestVideo');
+});
 
 Route::controller(PlayerCrudController::class)->group(function () {
     Route::get('/players/{id}', 'read');
