@@ -7,6 +7,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PlayerCrudController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PotController;
+use App\Http\Controllers\StageController;
 use App\Http\Controllers\TeamOfTheWeekController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
@@ -49,6 +50,13 @@ Route::controller(TeamOfTheWeekController::class)->group(function () {
 Route::controller(VideoController::class)->group(function () {
     Route::get('/videos', 'getVideos');
     Route::get('/videos/best', 'getBestVideo');
+});
+
+Route::controller(StageController::class)->group(function () {
+    Route::get('/stage/active', 'getActiveStage');
+    Route::get('/stage/game', 'getNextGame');
+    Route::post('/stage/shuffle/group', 'makeGroupShuffle');
+    Route::post('/stage/shuffle/playoff', 'makePlayOffShuffle');
 });
 
 Route::controller(PlayerCrudController::class)->group(function () {
