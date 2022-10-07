@@ -61,6 +61,20 @@ Route::controller(StageController::class)->group(function () {
     Route::post('/stage/shuffle/playoff', 'makePlayOffShuffle');
 });
 
+Route::controller(ClubController::class)->group(function () {
+    Route::get('/clubs/{id}/players', 'getPlayers');
+    Route::get('/clubs', 'getClubList');
+    Route::patch('/clubs/swap/groups', 'swapGroups');
+    Route::patch('/clubs/swap/pots', 'swapPots');
+});
+
+Route::controller(PlayerController::class)->group(function () {
+    Route::get('/players/{id}/stats', 'showPlayerStats');
+    Route::get('/players/rating', 'sortBy');
+    Route::get('/players/position/good', 'getForTeamOfTheWeek');
+    Route::patch('/players/swap', 'swap');
+});
+
 Route::controller(PlayerCrudController::class)->group(function () {
     Route::get('/players/{id}', 'read');
     Route::post('/players/create', 'create');
