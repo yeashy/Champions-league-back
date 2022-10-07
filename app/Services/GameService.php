@@ -29,12 +29,7 @@ class GameService
 
     public function makeGameWith(int $homeId, int $awayId, int $stageId, int $groupId = null)
     {
-        $game = new Game();
-        $game->home_club_id = $homeId;
-        $game->away_club_id = $awayId;
-        $game->stage_id = $stageId;
-        $game->group_id = $groupId;
-        $game->save();
+        AddGameJob::dispatch($homeId, $awayId, $stageId, $groupId)->onQueue('high');
     }
 
     private function countGoals(array $homePlayers, array $awayPlayers, Game $game): Game

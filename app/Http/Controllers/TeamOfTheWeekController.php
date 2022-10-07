@@ -36,7 +36,7 @@ class TeamOfTheWeekController extends Controller
             $players = PlayerTOTWDTO::fromRequest($request);
 
             foreach ($players as $player) {
-//                AddPlayerTotwJob::dispatch($player, $team->id)->onQueue('high');TODO: uncomment
+                AddPlayerTotwJob::dispatch($player, $team->id)->onQueue('high');
             }
         } catch (\Throwable $e) {
             return response()->json([
