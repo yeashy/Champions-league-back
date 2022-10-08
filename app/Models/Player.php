@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\DTO\ClubPlayerDTO;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property string $name
@@ -41,4 +43,34 @@ class Player extends Model
         return $this->belongsToMany(TeamOfTheWeek::class, 'player_team_of_the_week', 'player_id', 'team_of_the_week_id');
     }
 
+    public function history()
+    {
+        $matches = DB::table('games_players')->where('player_id', '=', $this->id)->get();
+
+        $clubs = $matches->map(function ($match) {
+            $game = Game::find($match->game_id);
+
+            if ($game->homeClub === $this->club) {
+                return ClubPlayerDTO::fromModel($game->awayClub);
+            }
+
+            return ClubPlayerDTO::fromModel($game->homeClub);
+        });
+
+        $history = [];
+
+        foreach ($matches as $index => $match) {
+            $history[] = [
+                "goals" => $match->goals,
+                "assists" => $match->assists,
+                "own_goals" => $match->own_goals,
+                "yellow_cards" => $match->yellow_cards,
+                "red_cards" => $match->red_cards,
+                "rate" => $match->rate,
+                "against" => $clubs[$index]
+            ];
+        }
+
+        return $history;
+    }
 }
